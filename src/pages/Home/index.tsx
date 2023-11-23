@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Navigation from 'src/components/Navigation';
 import Tabs from 'src/components/Tabs';
 import Select from 'src/components/Select';
+import TaiwanMap from 'src/components/TaiwanMap';
 import rotateIconSrc from 'src/assets/images/rotate-cw.svg';
 import Overview from 'src/pages/Home/Overview';
 import { useElectionData } from 'src/hooks/useElectionsData';
@@ -38,6 +39,13 @@ const Row = styled.div`
   & > * {
     width: 100%;
   }
+`;
+
+const MapContainer = styled.div`
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
 `;
 
 const Home = () => {
@@ -94,10 +102,12 @@ const Home = () => {
           </SelectsWrapper>
           <button>
             <img src={rotateIconSrc} />
-            {/* button */}
           </button>
         </SelectSection>
         <Overview candidatePairs={candidatePairs} />
+        <MapContainer>
+          <TaiwanMap />
+        </MapContainer>
       </ContentWrapper>
     </>
   );
