@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import styled from 'styled-components';
 import Navigation from 'src/components/Navigation';
 import Tabs from 'src/components/Tabs';
@@ -39,18 +40,20 @@ const Row = styled.div`
   }
 `;
 
-// 'https://db.cec.gov.tw/static/elections/data/areas/ELC/P0/00/1f7d9f4f6bfe06fdaf4db7df2ed4d60c/C/00_000_00_000_0000.json?_t=1700639034'
-// 'https://db.cec.gov.tw/static/elections/data/tickets/ELC/P0/00/1f7d9f4f6bfe06fdaf4db7df2ed4d60c/C/00_000_00_000_0000.json?_t=1700639034'
 const Home = () => {
   const {
     cities,
+    areas,
+    depts,
     selectedThemeId,
     selectedCityId,
+    selectedAreaId,
+    selectedDeptId,
     themeItems,
-    // nationTickets,
-    // cityTickets,
     setSelectedThemeId,
     setSelectedCityId,
+    setSelectedAreaId,
+    setSelectedDeptId,
   } = useElectionData();
   const tabOptions = themeItems.map((themeItem) => {
     return {
@@ -58,7 +61,7 @@ const Home = () => {
       id: themeItem.theme_id,
     };
   });
-  console.log({themeItems})
+  console.log({selectedDeptId})
 
   return (
     <>
@@ -77,8 +80,16 @@ const Home = () => {
               onChange={setSelectedCityId}
             />
             <Row>
-              <Select options={cities.map((city) => ({ id: `${city.prv_code}_${city.city_code}_${city.area_code}_${city.dept_code}_${city.li_code}`, name: city.area_name }))}  />
-              <Select options={cities.map((city) => ({ id: `${city.prv_code}_${city.city_code}_${city.area_code}_${city.dept_code}_${city.li_code}`, name: city.area_name }))}  />
+              <Select
+                selectedOptionId={selectedAreaId}
+                options={areas.map((area: any) => ({ id: `${area.prv_code}_${area.city_code}_${area.area_code}_${area.dept_code}_${area.li_code}`, name: area.area_name }))}
+                onChange={setSelectedAreaId}
+              />
+              <Select
+                selectedOptionId={selectedDeptId}
+                options={depts.map((dept: any) => ({ id: `${dept.prv_code}_${dept.city_code}_${dept.area_code}_${dept.dept_code}_${dept.li_code}`, name: dept.area_name }))}
+                onChange={setSelectedDeptId}
+              />
             </Row>
           </SelectsWrapper>
           <button>
