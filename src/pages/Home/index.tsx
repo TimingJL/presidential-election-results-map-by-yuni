@@ -4,7 +4,7 @@ import Navigation from 'src/components/Navigation';
 import Tabs from 'src/components/Tabs';
 import Select from 'src/components/Select';
 import rotateIconSrc from 'src/assets/images/rotate-cw.svg';
-
+import Overview from 'src/pages/Home/Overview';
 import { useElectionData } from 'src/hooks/useElectionsData';
 
 const ContentWrapper = styled.div`
@@ -61,7 +61,6 @@ const Home = () => {
       id: themeItem.theme_id,
     };
   });
-  console.log({selectedDeptId})
 
   return (
     <>
@@ -97,6 +96,7 @@ const Home = () => {
             {/* button */}
           </button>
         </SelectSection>
+        <Overview />
       </ContentWrapper>
     </>
   );
