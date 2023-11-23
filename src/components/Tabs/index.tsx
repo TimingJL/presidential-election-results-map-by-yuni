@@ -68,8 +68,8 @@ const Tabs = (props: IProps) => {
           slidesPerView: 8,
         }
       }}
-      onSlideChange={() => console.log('slide change')}
-      onSwiper={(swiper) => console.log(swiper)}
+      // onSlideChange={() => console.log('slide change')}
+      // onSwiper={(swiper) => console.log(swiper)}
     >
       {options.map((option) => {
         const isSelected = option.id === selectedOptionId;

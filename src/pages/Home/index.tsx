@@ -42,14 +42,15 @@ const Row = styled.div`
 
 const Home = () => {
   const {
-    cities,
-    areas,
-    depts,
+    cities = [],
+    areas = [],
+    depts = [],
     selectedThemeId,
     selectedCityId,
     selectedAreaId,
     selectedDeptId,
-    themeItems,
+    themeItems = [],
+    candidatePairs = [],
     setSelectedThemeId,
     setSelectedCityId,
     setSelectedAreaId,
@@ -96,7 +97,7 @@ const Home = () => {
             {/* button */}
           </button>
         </SelectSection>
-        <Overview />
+        <Overview candidatePairs={candidatePairs} />
       </ContentWrapper>
     </>
   );
