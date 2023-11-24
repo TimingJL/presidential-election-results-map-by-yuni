@@ -2,8 +2,8 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import Collpase from 'src/components/Collapse';
+import VoteCount from 'src/components/VoteCount';
 import Nationwide from './Nationwide';
-import PoliticalParty from './PoliticalParty';
 
 interface IProps {
   candidatePairs: any[];
@@ -28,7 +28,7 @@ const Overview = (props: IProps) => {
       content={
         <Container>
           <Nationwide />
-          <PoliticalParty candidatePairs={candidatePairs} />
+          <VoteCount candidatePairs={candidatePairs} />
         </Container>
       }
     />

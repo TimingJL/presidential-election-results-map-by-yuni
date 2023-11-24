@@ -44,7 +44,7 @@ const BoldText = styled.div`
   color: #000;
 `;
 
-const PoliticalParty = (props: IProps) => {
+const VoteCount = (props: IProps) => {
   const { candidatePairs } = props;
   const colors = candidatePairs.map((item) => `#${item.partyColor}`);
   const data = candidatePairs.map((item) => {
@@ -108,4 +108,4 @@ const PoliticalParty = (props: IProps) => {
   );
 };
 
-export default PoliticalParty;
+export default VoteCount;
