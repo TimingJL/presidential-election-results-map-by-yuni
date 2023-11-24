@@ -9,6 +9,7 @@ interface IProps {
   }[];
   selectedOptionId?: string;
   onChange?: (optionId: string) => void;
+  className?: string;
 }
 
 const SelectWrapper = styled.div`
@@ -19,6 +20,7 @@ const SelectButton = styled.div`
   display: flex;
   justify-content: space-between;
   height: 36px;
+  box-sizing: border-box;
   padding: 0 12px;
   align-items: center;
   background: #fff;
@@ -58,7 +60,7 @@ const Option = styled.div<{
 const Select = (props: IProps) => {
   const selectRef = React.useRef<HTMLDivElement>(null);
   const [open, setOpen] = React.useState(false);
-  const { options = [], selectedOptionId, onChange = () => null } = props;
+  const { options = [], selectedOptionId, className, onChange = () => null } = props;
   const selectedOption = options.find((option) => option.id === selectedOptionId);
 
   React.useEffect(() => {
@@ -79,7 +81,7 @@ const Select = (props: IProps) => {
   }, []); // 空的依賴列表表示僅在組件卸載時清除監聽器
 
   return (
-    <SelectWrapper ref={selectRef}>
+    <SelectWrapper ref={selectRef} className={className}>
       <SelectButton onClick={() => setOpen(true)}>
         <div>{selectedOption?.name || '請選擇'}</div>
         <img src={ChevronDownSrc} />

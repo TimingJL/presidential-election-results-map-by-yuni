@@ -54,9 +54,14 @@ const Collapse = (props: IProps) => {
     <Container {...rest}>
       <Header onClick={onToggle}>
         <div className="collapse__header-title">{title}</div>
-        <ChevronDown $open={open} src={ChevronDownSrc} />
+        <ChevronDown $open={open} src={ChevronDownSrc} className="collapse__chevron" />
       </Header>
-      <Content ref={panelRef} $open={open} $height={scrollHeight}>
+      <Content
+        ref={panelRef}
+        $open={open}
+        $height={scrollHeight}
+        className="collapse__header-content"
+      >
         {content}
       </Content>
     </Container>

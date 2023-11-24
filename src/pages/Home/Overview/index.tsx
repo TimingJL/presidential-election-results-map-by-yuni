@@ -10,6 +10,25 @@ interface IProps {
 }
 
 const Container = styled.div`
+  .overview__collapse {
+    width: 100%;
+    margin-top: 20px;
+  }
+  @media ${({ theme }) => theme.desktop} {
+    .overview__collapse, .collapse__header-title {
+      width: 270px;
+    }
+    .collapse__chevron {
+      visibility: hidden;
+    }
+    .collapse__header-content {
+      overflow: visible;
+      max-height: fit-content;
+    }
+  }
+`;
+
+const Content = styled.div`
   padding: 20px;
   & > *:not(:first-child) {
     margin-top: 20px;
@@ -20,18 +39,20 @@ const Overview = (props: IProps) => {
   const { nationCandidatePairs } = props;
   const [open, setOpen] = React.useState(false);
   return (
-    <Collpase
-      open={open}
-      title="投票概況"
-      onToggle={() => setOpen(!open)}
-      style={{ marginTop: '20px', width: '100%' }}
-      content={
-        <Container>
-          <Nationwide />
-          <VoteCountAndChart candidatePairs={nationCandidatePairs} />
-        </Container>
-      }
-    />
+    <Container>
+      <Collpase
+        open={open}
+        title="投票概況"
+        onToggle={() => setOpen(!open)}
+        className="overview__collapse"
+        content={
+          <Content>
+            <Nationwide />
+            <VoteCountAndChart candidatePairs={nationCandidatePairs} />
+          </Content>
+        }
+      />
+    </Container>
   );
 };
 
