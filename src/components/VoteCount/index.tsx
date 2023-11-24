@@ -1,21 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import styled from 'styled-components';
-import { PieChart, Pie, Cell } from 'recharts';
 
 interface IProps {
   candidatePairs: any[];
 }
 
-const Flex = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  font-size: 12px;
-`;
-
 const Row = styled.div`
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 12px;
 `;
 
@@ -23,6 +15,7 @@ const CandidateRow = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
+  font-size: 12px;
 `;
 
 const CandidateNoCircle = styled.div<{
@@ -39,72 +32,47 @@ const CandidateNoCircle = styled.div<{
   align-items: center;
 `;
 
-const BoldText = styled.div`
+const NoWrapText = styled.div`
+  white-space: nowrap;
+`;
+
+const BoldText = styled(NoWrapText)`
   font-weight: 600;
   color: #000;
 `;
 
 const VoteCount = (props: IProps) => {
   const { candidatePairs } = props;
-  const colors = candidatePairs.map((item) => `#${item.partyColor}`);
-  const data = candidatePairs.map((item) => {
-    return {
-      name: item.partyName,
-      value: item.ticketPercent,
-    };
-  });
   return (
-    <Flex
-      style={{
-        alignItems: 'center',
-      }}
-    >
-      <PieChart width={72} height={72}>
-        <Pie
-          data={data}
-          cx={31}
-          cy={31}
-          startAngle={90}
-          endAngle={-270}
-          innerRadius={20}
-          outerRadius={36}
-          dataKey="value"
-        >
-          {data.map((_, index) => (
-            <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
-          ))}
-        </Pie>
-      </PieChart>
-      <CandidateRow>
-        {candidatePairs.map((item) => {
-          return (
-            <Row key={item.candidateNo}>
-              <Row
+    <CandidateRow>
+      {candidatePairs.map((item) => {
+        return (
+          <Row key={item.candidateNo}>
+            <Row
+              style={{
+                borderRight: `2px solid #${item.partyColor}`,
+              }}
+            >
+              <CandidateNoCircle $color={`#${item.partyColor}`}>
+                <span>{item.candidateNo}</span>
+              </CandidateNoCircle>
+              <div
                 style={{
-                  borderRight: `2px solid #${item.partyColor}`,
+                  width: '96px'
                 }}
               >
-                <CandidateNoCircle $color={`#${item.partyColor}`}>
-                  <span>{item.candidateNo}</span>
-                </CandidateNoCircle>
-                <div
-                  style={{
-                    width: '96px'
-                  }}
-                >
-                  <BoldText>{item.partyName}</BoldText>
-                  <div>{`${item.presidentName} | ${item.vicePresidentName}`}</div>
-                </div>
-              </Row>
-              <div>
-                <BoldText>{item.ticketPercent}%</BoldText>
-                <div>{item.ticketNum.toLocaleString()} 票</div>
+                <BoldText>{item.partyName}</BoldText>
+                <NoWrapText>{`${item.presidentName} | ${item.vicePresidentName}`}</NoWrapText>
               </div>
             </Row>
-          );
-        })}
-      </CandidateRow>
-    </Flex>
+            <div>
+              <BoldText>{item.ticketPercent}%</BoldText>
+              <NoWrapText>{item.ticketNum.toLocaleString()} 票</NoWrapText>
+            </div>
+          </Row>
+        );
+      })}
+    </CandidateRow>
   );
 };
 

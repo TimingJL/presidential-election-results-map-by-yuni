@@ -2,11 +2,11 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import Collpase from 'src/components/Collapse';
-import VoteCount from 'src/components/VoteCount';
+import VoteCountAndChart from './VoteCountAndChart';
 import Nationwide from './Nationwide';
 
 interface IProps {
-  candidatePairs: any[];
+  nationCandidatePairs: any[];
 }
 
 const Container = styled.div`
@@ -17,7 +17,7 @@ const Container = styled.div`
 `;
 
 const Overview = (props: IProps) => {
-  const { candidatePairs } = props;
+  const { nationCandidatePairs } = props;
   const [open, setOpen] = React.useState(false);
   return (
     <Collpase
@@ -28,7 +28,7 @@ const Overview = (props: IProps) => {
       content={
         <Container>
           <Nationwide />
-          <VoteCount candidatePairs={candidatePairs} />
+          <VoteCountAndChart candidatePairs={nationCandidatePairs} />
         </Container>
       }
     />

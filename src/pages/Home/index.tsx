@@ -7,6 +7,7 @@ import TaiwanMap from 'src/components/TaiwanMap';
 import rotateIconSrc from 'src/assets/images/rotate-cw.svg';
 import Overview from 'src/pages/Home/Overview';
 import { useElectionData } from 'src/hooks/useElectionsData';
+import VoteCountInfo from 'src/pages/Home/VoteCountInfo';
 
 const ContentWrapper = styled.div`
   padding: 32px 24px;
@@ -48,6 +49,10 @@ const MapContainer = styled.div`
   justify-content: center;
 `;
 
+const VoteCountInfoContainer = styled.div`
+  margin-top: 20px;
+`;
+
 const Home = () => {
   const {
     cities = [],
@@ -58,13 +63,16 @@ const Home = () => {
     selectedAreaId,
     selectedDeptId,
     themeItems = [],
-    candidatePairs = [],
+    nationCandidatePairs = [],
+    cityCandidatePairs = [],
+    areaCandidatePairs = [],
+    deptCandidatePairs = [],
     setSelectedThemeId,
     setSelectedCityId,
     setSelectedAreaId,
     setSelectedDeptId,
   } = useElectionData();
-  const tabOptions = themeItems.map((themeItem) => {
+  const tabOptions = themeItems.map((themeItem: any) => {
     return {
       name: themeItem.theme_name,
       id: themeItem.theme_id,
@@ -104,10 +112,17 @@ const Home = () => {
             <img src={rotateIconSrc} />
           </button>
         </SelectSection>
-        <Overview candidatePairs={candidatePairs} />
+        <Overview nationCandidatePairs={nationCandidatePairs} />
         <MapContainer>
           <TaiwanMap />
         </MapContainer>
+        <VoteCountInfoContainer>
+          <VoteCountInfo
+            cityCandidatePairs={cityCandidatePairs}
+            areaCandidatePairs={areaCandidatePairs}
+            deptCandidatePairs={deptCandidatePairs}
+          />
+        </VoteCountInfoContainer>
       </ContentWrapper>
     </>
   );

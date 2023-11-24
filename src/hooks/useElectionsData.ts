@@ -15,6 +15,8 @@ const getCandidatePairs = (nationTickets: any = []) => {
     const vicePresident = nationTickets.find((item: any) => item.cand_no === candidateNo && item.is_vice === 'Y');
     return {
       candidateNo,
+      areaId: `${president.prv_code}_${president.city_code}_${president.area_code}_${president.dept_code}_${president.li_code}`,
+      areaName: president.area_name,
       presidentName: president.cand_name,
       vicePresidentName: vicePresident.cand_name,
       partyName: president.party_name,
@@ -31,12 +33,17 @@ export const useElectionData = () => {
   const [selectedCityId, setSelectedCityId] = React.useState<string>(`${defaultCity.prv_code}_${defaultCity.city_code}_${defaultCity.area_code}_${defaultCity.dept_code}_${defaultCity.li_code}`);
   const [selectedAreaId, setSelectedAreaId] = React.useState<string>('');
   const [selectedDeptId, setSelectedDeptId] = React.useState<string>('');
-  const [nationTickets, setNationTickets] = React.useState([]);
-  const [cityTickets, setCityTickets] = React.useState<any>([]);
   const [areas, setAreas] = React.useState([]);
   const [depts, setDepts] = React.useState<any>([]);
+  const [nationTickets, setNationTickets] = React.useState([]);
+  const [cityTickets, setCityTickets] = React.useState<any>([]);
+  const [areaTickets, setAreaTickets] = React.useState<any>([]);
+  const [deptTickets, setDeptTickets] = React.useState<any>([]);
   const themeItems = areaThemes[0].theme_items;
-  const candidatePairs = getCandidatePairs(nationTickets);
+  const nationCandidatePairs = getCandidatePairs(nationTickets);
+  const cityCandidatePairs = getCandidatePairs(cityTickets?.filter((item: any) => `${item.prv_code}_${item.city_code}_${item.area_code}_${item.dept_code}_${item.li_code}` === selectedCityId));
+  const areaCandidatePairs = getCandidatePairs(areaTickets?.filter((item: any) => `${item.prv_code}_${item.city_code}_${item.area_code}_${item.dept_code}_${item.li_code}` === selectedAreaId));
+  const deptCandidatePairs = getCandidatePairs(deptTickets?.filter((item: any) => `${item.prv_code}_${item.city_code}_${item.area_code}_${item.dept_code}_${item.li_code}` === selectedDeptId));
 
   React.useEffect(() => {
     // 年度，全國
@@ -66,6 +73,13 @@ export const useElectionData = () => {
     }).catch(err => {
       console.log(err);
     });
+
+    axios.get(`https://db.cec.gov.tw/static/elections/data/tickets/ELC/P0/00/${selectedThemeId}/D/${selectedCityId}.json`)
+    .then(res =>{
+      setAreaTickets(res.data[selectedCityId]);
+    }).catch(err => {
+      console.log(err);
+    });
   }, [selectedThemeId, selectedCityId]);
 
   React.useEffect(() => {
@@ -76,6 +90,13 @@ export const useElectionData = () => {
       const defaultDept = updatedDept?.[0];
       setDepts(updatedDept);
       setSelectedDeptId(`${defaultDept?.prv_code}_${defaultDept?.city_code}_${defaultDept?.area_code}_${defaultDept?.dept_code}_${defaultDept?.li_code}`);
+    }).catch(err => {
+      console.log(err);
+    });
+
+    axios.get(`https://db.cec.gov.tw/static/elections/data/tickets/ELC/P0/00/${selectedThemeId}/L/${selectedCityId}.json`)
+    .then(res =>{
+      setDeptTickets(res.data[selectedAreaId]);
     }).catch(err => {
       console.log(err);
     });
@@ -97,6 +118,11 @@ export const useElectionData = () => {
     setSelectedDeptId,
     nationTickets,
     cityTickets,
-    candidatePairs,
+    areaTickets,
+    deptTickets,
+    nationCandidatePairs,
+    cityCandidatePairs,
+    areaCandidatePairs,
+    deptCandidatePairs,
   };
 };

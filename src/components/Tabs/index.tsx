@@ -58,18 +58,19 @@ const Tabs = (props: IProps) => {
         1024: {
           slidesPerView: 5,
         },
+        // when window width is >= 1200px
         1200: {
           slidesPerView: 6,
         },
+        // when window width is >= 1400px
         1400: {
           slidesPerView: 7,
         },
+        // when window width is >= 1600px
         1600: {
           slidesPerView: 8,
         }
       }}
-      // onSlideChange={() => console.log('slide change')}
-      // onSwiper={(swiper) => console.log(swiper)}
     >
       {options.map((option) => {
         const isSelected = option.id === selectedOptionId;
