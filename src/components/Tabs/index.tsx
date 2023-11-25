@@ -27,7 +27,7 @@ const Option = styled.div<{
   display: flex;
   justify-content: center;
   color: #BFBFBF;
-  transition: all 0.3s ease;
+  transition: all 0.3s ease-in-out;
   .option__name {
     width: fit-content;
     padding-bottom: 12px;

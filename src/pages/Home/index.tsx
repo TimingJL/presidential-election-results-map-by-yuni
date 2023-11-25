@@ -27,7 +27,7 @@ const Button = styled.button`
   justify-content: center;
   gap: 8px;
   background-color: #262E49;
-  transition: all 0.2s ease;
+  transition: all 0.2s ease-in-out;
   &:hover {
     background-color: #525982;
   }
@@ -113,7 +113,7 @@ const VoteCountInfoContainer = styled.div`
 
 const Home = () => {
   const {
-    electionOverview = {},
+    electionOverview,
     cities = [],
     areas = [],
     depts = [],
