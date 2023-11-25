@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import ChevronDownSrc from 'src/assets/images/chevron-down.svg';
 
 interface IProps {
@@ -7,16 +7,28 @@ interface IProps {
     name: string;
     id: string;
   }[];
+  disabled?: boolean;
   selectedOptionId?: string;
   onChange?: (optionId: string) => void;
   className?: string;
 }
 
+const disabledStyle = css`
+  &:hover, &:active, &:focus {
+    border-color: #E6E6E6;
+  }
+  cursor: not-allowed;
+  opacity: 0.5;
+`;
+
 const SelectWrapper = styled.div`
   position: relative;
 `;
 
-const SelectButton = styled.div`
+const SelectButton = styled.div<{
+  $open: boolean;
+  $disabled?: boolean;
+}>`
   display: flex;
   justify-content: space-between;
   height: 36px;
@@ -25,8 +37,15 @@ const SelectButton = styled.div`
   align-items: center;
   background: #fff;
   border-radius: 8px;
-  border: 1px solid #E6E6E6;
+  border: 1px solid ${props => props.$open ? '#262E49' : '#E6E6E6'};
   cursor: pointer;
+  &:hover {
+    border: 1px solid ${props => props.$open ? '#262E49' : '#BFBFBF'};
+  }
+  &:active, &:focus {
+    border-color: #262E49;
+  }
+  ${props => props.$disabled && disabledStyle}
 `;
 
 const SelectDropdown = styled.div<{
@@ -60,7 +79,7 @@ const Option = styled.div<{
 const Select = (props: IProps) => {
   const selectRef = React.useRef<HTMLDivElement>(null);
   const [open, setOpen] = React.useState(false);
-  const { options = [], selectedOptionId, className, onChange = () => null } = props;
+  const { options = [], selectedOptionId, className, disabled = false, onChange = () => null } = props;
   const selectedOption = options.find((option) => option.id === selectedOptionId);
   const hasOptions = options.length > 0;
 
@@ -83,7 +102,14 @@ const Select = (props: IProps) => {
 
   return (
     <SelectWrapper ref={selectRef} className={className}>
-      <SelectButton onClick={() => setOpen(true)}>
+      <SelectButton
+        $open={open}
+        $disabled={disabled}
+        onClick={() => {
+          if (disabled) return;
+          setOpen(true);
+        }}
+      >
         <div>{selectedOption?.name || '請選擇'}</div>
         <img src={ChevronDownSrc} />
       </SelectButton>

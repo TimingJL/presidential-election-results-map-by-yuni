@@ -12,6 +12,7 @@ interface IProps {
 
 const activeOptionStyle = css`
   font-weight: 700;
+  color: #000000;
   .option__name {
     border-bottom: 4px solid #262E49;
   }
@@ -25,9 +26,18 @@ const Option = styled.div<{
   cursor: pointer;
   display: flex;
   justify-content: center;
+  color: #BFBFBF;
+  transition: all 0.3s ease;
   .option__name {
     width: fit-content;
     padding-bottom: 12px;
+  }
+  &:hover {
+    color: #262E49;
+    .option__name {
+      font-weight: 600;
+      border-bottom: 4px solid #BFBFBF;
+    }
   }
   ${(props) => props.$isSelected && activeOptionStyle}
 `;

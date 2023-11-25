@@ -17,21 +17,31 @@ const ContentWrapper = styled.div`
   }
 `;
 
+const Button = styled.button`
+  box-sizing: border-box;
+  padding: 0;
+  margin-left: 8px;
+  width: 36px;
+  color: #FFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: #262E49;
+  transition: all 0.2s ease;
+  &:hover {
+    background-color: #525982;
+  }
+  &:active {
+    background-color: #171C2C;
+    transform: scale(0.95);
+  }
+`;
+
 const SelectSection = styled.div`
   margin-top: 20px;
   display: flex;
   width: 100%;
-  .select__clear-button {
-    box-sizing: border-box;
-    padding: 0;
-    margin-left: 8px;
-    width: 36px;
-    color: #FFF;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-  }
   .select__clear-button-text {
     display: none;
   }
@@ -150,19 +160,21 @@ const Home = () => {
             <Row className="select__area-and-dept">
               <Select
                 className="select__area"
+                disabled={!selectedCityId}
                 selectedOptionId={selectedAreaId}
                 options={areas.map((area: any) => ({ id: `${area.prv_code}_${area.city_code}_${area.area_code}_${area.dept_code}_${area.li_code}`, name: area.area_name }))}
                 onChange={setSelectedAreaId}
               />
               <Select
                 className="select__dept"
+                disabled={!selectedAreaId || !selectedCityId}
                 selectedOptionId={selectedDeptId}
                 options={depts.map((dept: any) => ({ id: `${dept.prv_code}_${dept.city_code}_${dept.area_code}_${dept.dept_code}_${dept.li_code}`, name: dept.area_name }))}
                 onChange={setSelectedDeptId}
               />
             </Row>
           </SelectsWrapper>
-          <button
+          <Button
             className="select__clear-button"
             onClick={() => {
               setSelectedCityId('');
@@ -172,7 +184,7 @@ const Home = () => {
           >
             <span className="select__clear-button-text">清除</span>
             <img src={rotateIconSrc} />
-          </button>
+          </Button>
         </SelectSection>
         <Content>
           <Overview
