@@ -13,7 +13,7 @@ const NavigationWrapper = styled.div`
 const Navigation = () => {
   return (
     <NavigationWrapper>
-      2020 開票地圖
+      總統即時開票全台地圖
     </NavigationWrapper>
   );
 };

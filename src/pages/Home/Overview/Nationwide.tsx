@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import styled from 'styled-components';
 import { PieChart, Pie, Cell } from 'recharts';
 
@@ -43,7 +44,12 @@ const data = [
 ];
 const COLORS = ['#262E49', '#D9D9D9'];
 
-const Nationwide = () => {
+interface IProps {
+  electionOverview: any;
+}
+
+const Nationwide = (props: IProps) => {
+  const { electionOverview } = props;
   return (
     <Flex>
       <Row>
@@ -64,14 +70,14 @@ const Nationwide = () => {
           </Pie>
         </PieChart>
         <VotingRate>
-          <div className="voting-rate__percentage">74.9%</div>
+          <div className="voting-rate__percentage">{electionOverview.vote_to_elect}%</div>
           <div className="voting-rate__label">投票率</div>
         </VotingRate>
       </Row>
       <Tickets>
-        <div>投票數<span>14,464,571票</span></div>
-        <div>無效票數<span>163,631 票</span></div>
-        <div>有效票數<span>14,300,940 票</span></div>
+        <div>投票數<span>{electionOverview.vote_ticket?.toLocaleString()} 票</span></div>
+        <div>無效票數<span>{electionOverview.invalid_ticket?.toLocaleString()} 票</span></div>
+        <div>有效票數<span>{electionOverview.valid_ticket?.toLocaleString()} 票</span></div>
       </Tickets>
     </Flex>
   );

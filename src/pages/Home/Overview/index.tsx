@@ -6,6 +6,7 @@ import VoteCountAndChart from './VoteCountAndChart';
 import Nationwide from './Nationwide';
 
 interface IProps {
+  electionOverview: any;
   nationCandidatePairs: any[];
 }
 
@@ -36,7 +37,7 @@ const Content = styled.div`
 `;
 
 const Overview = (props: IProps) => {
-  const { nationCandidatePairs } = props;
+  const { nationCandidatePairs, electionOverview } = props;
   const [open, setOpen] = React.useState(false);
   return (
     <Container>
@@ -47,7 +48,7 @@ const Overview = (props: IProps) => {
         className="overview__collapse"
         content={
           <Content>
-            <Nationwide />
+            <Nationwide electionOverview={electionOverview} />
             <VoteCountAndChart candidatePairs={nationCandidatePairs} />
           </Content>
         }

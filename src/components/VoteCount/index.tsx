@@ -39,6 +39,8 @@ const NoWrapText = styled.div`
 const BoldText = styled(NoWrapText)`
   font-weight: 600;
   color: #000;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const VoteCount = (props: IProps) => {

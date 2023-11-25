@@ -104,6 +104,7 @@ const VoteCountInfoContainer = styled.div`
 
 const Home = () => {
   const {
+    electionOverview = {},
     cities = [],
     areas = [],
     depts = [],
@@ -120,6 +121,7 @@ const Home = () => {
     setSelectedCityId,
     setSelectedAreaId,
     setSelectedDeptId,
+    cityTicketsMap = [],
   } = useElectionData();
   const tabOptions = themeItems.map((themeItem: any) => {
     return {
@@ -142,7 +144,7 @@ const Home = () => {
             <Select
               className="select__city"
               selectedOptionId={selectedCityId}
-              options={cities.map((city) => ({ id: `${city.prv_code}_${city.city_code}_${city.area_code}_${city.dept_code}_${city.li_code}`, name: city.area_name }))}
+              options={cities.map((city: any) => ({ id: `${city.prv_code}_${city.city_code}_${city.area_code}_${city.dept_code}_${city.li_code}`, name: city.area_name }))}
               onChange={setSelectedCityId}
             />
             <Row className="select__area-and-dept">
@@ -173,9 +175,12 @@ const Home = () => {
           </button>
         </SelectSection>
         <Content>
-          <Overview nationCandidatePairs={nationCandidatePairs} />
+          <Overview
+            electionOverview={electionOverview}
+            nationCandidatePairs={nationCandidatePairs}
+          />
           <MapContainer>
-            <TaiwanMap />
+            <TaiwanMap cityTicketsMap={cityTicketsMap} />
           </MapContainer>
           <VoteCountInfoContainer>
             <VoteCountInfo

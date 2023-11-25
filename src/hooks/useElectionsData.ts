@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from 'react';
 import axios from 'axios';
-import { uniq } from 'lodash';
+import { uniq, orderBy } from 'lodash';
 import partyColors from 'src/assets/data/party_colors.json';
 import areaThemes from 'src/assets/data/area_themes.json';
-import cities from 'src/assets/data/cities.json';
 
 const getCandidatePairs = (nationTickets: any = []) => {
   const candidateNoList = uniq(nationTickets.map((item: any) => item.cand_no)) as number[];
@@ -26,13 +25,37 @@ const getCandidatePairs = (nationTickets: any = []) => {
   });
 };
 
+const getCityTicketsMap = (cities: any = [], cityTickets: any = []): {
+  code: string;
+  name: string;
+  partyColor: string;
+  partyName: string;
+}[] => {
+  const cityTicketsMap = cities.map((city: any) => {
+    const code = `${city.prv_code}_${city.city_code}_${city.area_code}_${city.dept_code}_${city.li_code}`;
+    const name = city.area_name;
+    const tickets = cityTickets.filter((item: any) => item.area_name === name);
+    const winnerParty = orderBy(tickets, ['ticket_num'], ['desc'])[0];
+    const partyColor = (partyColors as any)?.find((item: any) => item.party_name === winnerParty?.party_name)?.color_code;
+    return {
+      code,
+      name,
+      partyName: winnerParty?.party_name,
+      partyColor,
+    }
+  });
+  return cityTicketsMap;
+};
+
 export const useElectionData = () => {
   const [selectedThemeId, setSelectedThemeId] = React.useState(areaThemes[0].theme_items[0].theme_id);
+  const [cities, setCities] = React.useState<any>([]);
   const [selectedCityId, setSelectedCityId] = React.useState<string>('');
   const [selectedAreaId, setSelectedAreaId] = React.useState<string>('');
   const [selectedDeptId, setSelectedDeptId] = React.useState<string>('');
   const [areas, setAreas] = React.useState([]);
   const [depts, setDepts] = React.useState<any>([]);
+  const [electionOverview, setElectionOverview] = React.useState<any>([]);
   const [nationTickets, setNationTickets] = React.useState([]);
   const [cityTickets, setCityTickets] = React.useState<any>([]);
   const [areaTickets, setAreaTickets] = React.useState<any>([]);
@@ -42,8 +65,28 @@ export const useElectionData = () => {
   const cityCandidatePairs = getCandidatePairs(cityTickets?.filter((item: any) => `${item.prv_code}_${item.city_code}_${item.area_code}_${item.dept_code}_${item.li_code}` === selectedCityId));
   const areaCandidatePairs = getCandidatePairs(areaTickets?.filter((item: any) => `${item.prv_code}_${item.city_code}_${item.area_code}_${item.dept_code}_${item.li_code}` === selectedAreaId));
   const deptCandidatePairs = getCandidatePairs(deptTickets?.filter((item: any) => `${item.prv_code}_${item.city_code}_${item.area_code}_${item.dept_code}_${item.li_code}` === selectedDeptId));
+  const cityTicketsMap = getCityTicketsMap(cities, cityTickets);
+  
+  React.useEffect(() => {
+    // 縣市行政區
+    axios.get(`https://db.cec.gov.tw/static/elections/data/areas/ELC/P0/00/${selectedThemeId}/C/00_000_00_000_0000.json`)
+    .then(res =>{
+      setCities(res.data['00_000_00_000_0000']);
+    }).catch(err => {
+      console.log(err);
+    });
+
+    // 選舉概況表
+    axios.get(`https://db.cec.gov.tw/static/elections/data/profiles/ELC/P0/00/${selectedThemeId}/N/00_000_00_000_0000.json`)
+    .then(res =>{
+      setElectionOverview(res.data['00_000_00_000_0000'][0]);
+    }).catch(err => {
+      console.log(err);
+    });
+  }, [selectedThemeId])
 
   React.useEffect(() => {
+    if (!selectedThemeId) return;
     // 年度，全國
     axios.get(`https://db.cec.gov.tw/static/elections/data/tickets/ELC/P0/00/${selectedThemeId}/N/00_000_00_000_0000.json`)
     .then(res =>{
@@ -61,6 +104,7 @@ export const useElectionData = () => {
   }, [selectedThemeId]);
 
   React.useEffect(() => {
+    if (!selectedThemeId || !selectedCityId) return;
     // 區、鄉、鎮
     axios.get(`https://db.cec.gov.tw/static/elections/data/areas/ELC/P0/00/${selectedThemeId}/D/${selectedCityId}.json`)
     .then(res =>{
@@ -81,6 +125,7 @@ export const useElectionData = () => {
   }, [selectedThemeId, selectedCityId]);
 
   React.useEffect(() => {
+    if (!selectedThemeId || !selectedCityId) return;
     // 里、村
     axios.get(`https://db.cec.gov.tw/static/elections/data/areas/ELC/P0/00/${selectedThemeId}/L/${selectedCityId}.json`)
     .then(res =>{
@@ -103,7 +148,7 @@ export const useElectionData = () => {
   return {
     partyColors,
     themeItems,
-    cities: cities['00_000_00_000_0000'],
+    cities,
     areas,
     depts,
     selectedAreaId,
@@ -114,6 +159,7 @@ export const useElectionData = () => {
     setSelectedCityId,
     setSelectedAreaId,
     setSelectedDeptId,
+    electionOverview,
     nationTickets,
     cityTickets,
     areaTickets,
@@ -122,5 +168,6 @@ export const useElectionData = () => {
     cityCandidatePairs,
     areaCandidatePairs,
     deptCandidatePairs,
+    cityTicketsMap,
   };
 };
