@@ -47,6 +47,23 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+
+.rc-tooltip-content {
+  border-radius: 4px;
+  font-weight: 600;
+  background-color: #1a1a1a99;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.rc-tooltip-arrow {
+  border-top-color: #1a1a1abb !important;
+}
+.rc-tooltip-inner {
+  min-height: auto;
+  background-color: inherit;
+  border: none;
+  color: #FFF;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

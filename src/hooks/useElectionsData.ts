@@ -18,7 +18,7 @@ const getCandidatePairs = (nationTickets: any = []) => {
       vicePresidentName: vicePresident.cand_name,
       partyName: president.party_name,
       partyCode: president.party_code,
-      partyColor: (partyColors as any)?.find((item: any) => item.party_code.toString() === president.party_code.toString()).color_code,
+      partyColor: (partyColors as any)?.find((item: any) => item.party_name === president.party_name)?.color_code,
       ticketNum: president.ticket_num,
       ticketPercent: president.ticket_percent,
     };
@@ -66,6 +66,12 @@ export const useElectionData = () => {
   const areaCandidatePairs = getCandidatePairs(areaTickets?.filter((item: any) => `${item.prv_code}_${item.city_code}_${item.area_code}_${item.dept_code}_${item.li_code}` === selectedAreaId));
   const deptCandidatePairs = getCandidatePairs(deptTickets?.filter((item: any) => `${item.prv_code}_${item.city_code}_${item.area_code}_${item.dept_code}_${item.li_code}` === selectedDeptId));
   const cityTicketsMap = getCityTicketsMap(cities, cityTickets);
+
+  const resetSelectedIds = () => {
+    setSelectedCityId('');
+    setSelectedAreaId('');
+    setSelectedDeptId('');
+  };
   
   React.useEffect(() => {
     // 縣市行政區
@@ -74,6 +80,7 @@ export const useElectionData = () => {
       setCities(res.data['00_000_00_000_0000']);
     }).catch(err => {
       console.log(err);
+      resetSelectedIds();
     });
 
     // 選舉概況表
@@ -82,6 +89,7 @@ export const useElectionData = () => {
       setElectionOverview(res.data['00_000_00_000_0000'][0]);
     }).catch(err => {
       console.log(err);
+      resetSelectedIds();
     });
   }, [selectedThemeId])
 
@@ -93,6 +101,7 @@ export const useElectionData = () => {
       setNationTickets(res.data['00_000_00_000_0000']);
     }).catch(err => {
       console.log(err);
+      resetSelectedIds();
     });
 
     axios.get(`https://db.cec.gov.tw/static/elections/data/tickets/ELC/P0/00/${selectedThemeId}/C/00_000_00_000_0000.json`)
@@ -100,6 +109,7 @@ export const useElectionData = () => {
       setCityTickets(res.data['00_000_00_000_0000']);
     }).catch(err => {
       console.log(err);
+      resetSelectedIds();
     });
   }, [selectedThemeId]);
 
@@ -114,6 +124,7 @@ export const useElectionData = () => {
       setSelectedAreaId(`${defaultArea.prv_code}_${defaultArea.city_code}_${defaultArea.area_code}_${defaultArea.dept_code}_${defaultArea.li_code}`);
     }).catch(err => {
       console.log(err);
+      resetSelectedIds();
     });
 
     axios.get(`https://db.cec.gov.tw/static/elections/data/tickets/ELC/P0/00/${selectedThemeId}/D/${selectedCityId}.json`)
@@ -121,6 +132,7 @@ export const useElectionData = () => {
       setAreaTickets(res.data[selectedCityId]);
     }).catch(err => {
       console.log(err);
+      resetSelectedIds();
     });
   }, [selectedThemeId, selectedCityId]);
 
@@ -135,6 +147,7 @@ export const useElectionData = () => {
       setSelectedDeptId(`${defaultDept?.prv_code}_${defaultDept?.city_code}_${defaultDept?.area_code}_${defaultDept?.dept_code}_${defaultDept?.li_code}`);
     }).catch(err => {
       console.log(err);
+      resetSelectedIds();
     });
 
     axios.get(`https://db.cec.gov.tw/static/elections/data/tickets/ELC/P0/00/${selectedThemeId}/L/${selectedCityId}.json`)
@@ -142,6 +155,7 @@ export const useElectionData = () => {
       setDeptTickets(res.data[selectedAreaId]);
     }).catch(err => {
       console.log(err);
+      resetSelectedIds();
     });
   }, [selectedThemeId, selectedCityId, selectedAreaId]);
 
