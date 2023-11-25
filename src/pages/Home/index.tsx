@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import styled from 'styled-components';
 import Navigation from 'src/components/Navigation';
 import Tabs from 'src/components/Tabs';
@@ -133,7 +132,7 @@ const Home = () => {
     setSelectedDeptId,
     cityTicketsMap = [],
   } = useElectionData();
-  const tabOptions = themeItems.map((themeItem: any) => {
+  const tabOptions = themeItems.map((themeItem) => {
     return {
       name: themeItem.theme_name,
       id: themeItem.theme_id,
@@ -154,7 +153,7 @@ const Home = () => {
             <Select
               className="select__city"
               selectedOptionId={selectedCityId}
-              options={cities.map((city: any) => ({ id: `${city.prv_code}_${city.city_code}_${city.area_code}_${city.dept_code}_${city.li_code}`, name: city.area_name }))}
+              options={cities.map((city) => ({ id: `${city.prv_code}_${city.city_code}_${city.area_code}_${city.dept_code}_${city.li_code}`, name: city.area_name }))}
               onChange={setSelectedCityId}
             />
             <Row className="select__area-and-dept">
@@ -162,14 +161,14 @@ const Home = () => {
                 className="select__area"
                 disabled={!selectedCityId}
                 selectedOptionId={selectedAreaId}
-                options={areas.map((area: any) => ({ id: `${area.prv_code}_${area.city_code}_${area.area_code}_${area.dept_code}_${area.li_code}`, name: area.area_name }))}
+                options={areas.map((area) => ({ id: `${area.prv_code}_${area.city_code}_${area.area_code}_${area.dept_code}_${area.li_code}`, name: area.area_name }))}
                 onChange={setSelectedAreaId}
               />
               <Select
                 className="select__dept"
                 disabled={!selectedAreaId || !selectedCityId}
                 selectedOptionId={selectedDeptId}
-                options={depts.map((dept: any) => ({ id: `${dept.prv_code}_${dept.city_code}_${dept.area_code}_${dept.dept_code}_${dept.li_code}`, name: dept.area_name }))}
+                options={depts.map((dept) => ({ id: `${dept.prv_code}_${dept.city_code}_${dept.area_code}_${dept.dept_code}_${dept.li_code}`, name: dept.area_name }))}
                 onChange={setSelectedDeptId}
               />
             </Row>

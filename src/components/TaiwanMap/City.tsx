@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import styled from 'styled-components';
 import Tooltip from 'rc-tooltip';
 
@@ -9,15 +8,21 @@ const G = styled.g`
   }
 `;
 
+interface IData {
+  name: string;
+  code: string;
+  partyColor: string;
+}
+
 
 interface IProps {
-  data?: any;
+  data?: IData;
   content: React.ReactNode;
   onClick?: (cityId: string) => void;
 }
 
 const City = (props: IProps) => {
-  const { data = {}, content, onClick = () => null } = props;
+  const { data = {} as IData, content, onClick = () => null } = props;
   return (
     <Tooltip
       placement="top"

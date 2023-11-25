@@ -1,42 +1,37 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from 'react';
 import axios from 'axios';
 import { uniq, orderBy } from 'lodash';
 import partyColors from 'src/assets/data/party_colors.json';
 import areaThemes from 'src/assets/data/area_themes.json';
+import { TParty, TLocation, TTicket } from 'src/types';
 
-const getCandidatePairs = (nationTickets: any = []) => {
-  const candidateNoList = uniq(nationTickets.map((item: any) => item.cand_no)) as number[];
-  return candidateNoList.map((candidateNo: number) => {
-    const president = nationTickets.find((item: any) => item.cand_no === candidateNo && item.is_vice !== 'Y');
-    const vicePresident = nationTickets.find((item: any) => item.cand_no === candidateNo && item.is_vice === 'Y');
+const getCandidatePairs = (nationTickets: TTicket[] = []) => {
+  const candidateNoList = uniq(nationTickets.map((item) => item.cand_no));
+  return candidateNoList.map((candidateNo) => {
+    const president = nationTickets.find((item) => item.cand_no === candidateNo && item.is_vice !== 'Y');
+    const vicePresident = nationTickets.find((item) => item.cand_no === candidateNo && item.is_vice === 'Y');
     return {
       candidateNo,
-      areaId: `${president.prv_code}_${president.city_code}_${president.area_code}_${president.dept_code}_${president.li_code}`,
-      areaName: president.area_name,
-      presidentName: president.cand_name,
-      vicePresidentName: vicePresident.cand_name,
-      partyName: president.party_name,
-      partyCode: president.party_code,
-      partyColor: (partyColors as any)?.find((item: any) => item.party_name === president.party_name)?.color_code,
-      ticketNum: president.ticket_num,
-      ticketPercent: president.ticket_percent,
+      areaId: `${president?.prv_code}_${president?.city_code}_${president?.area_code}_${president?.dept_code}_${president?.li_code}`,
+      areaName: president?.area_name,
+      presidentName: president?.cand_name,
+      vicePresidentName: vicePresident?.cand_name,
+      partyName: president?.party_name,
+      partyCode: president?.party_code,
+      partyColor: (partyColors as TParty[])?.find((item) => item.party_name === president?.party_name)?.color_code,
+      ticketNum: president?.ticket_num,
+      ticketPercent: president?.ticket_percent,
     };
   });
 };
 
-const getCityTicketsMap = (cities: any = [], cityTickets: any = []): {
-  code: string;
-  name: string;
-  partyColor: string;
-  partyName: string;
-}[] => {
-  const cityTicketsMap = cities.map((city: any) => {
+const getCityTicketsMap = (cities: TLocation[] = [], cityTickets: TTicket[] = []) => {
+  const cityTicketsMap = cities.map((city) => {
     const code = `${city.prv_code}_${city.city_code}_${city.area_code}_${city.dept_code}_${city.li_code}`;
     const name = city.area_name;
-    const tickets = cityTickets.filter((item: any) => item.area_name === name);
+    const tickets = cityTickets.filter((item) => item.area_name === name);
     const winnerParty = orderBy(tickets, ['ticket_num'], ['desc'])[0];
-    const partyColor = (partyColors as any)?.find((item: any) => item.party_name === winnerParty?.party_name)?.color_code;
+    const partyColor = partyColors?.find((item) => item.party_name === winnerParty?.party_name)?.color_code || 'b3b3b3';
     return {
       code,
       name,
@@ -49,22 +44,22 @@ const getCityTicketsMap = (cities: any = [], cityTickets: any = []): {
 
 export const useElectionData = () => {
   const [selectedThemeId, setSelectedThemeId] = React.useState(areaThemes[0].theme_items[0].theme_id);
-  const [cities, setCities] = React.useState<any>([]);
+  const [cities, setCities] = React.useState<TLocation[]>([]);
   const [selectedCityId, setSelectedCityId] = React.useState<string>('');
   const [selectedAreaId, setSelectedAreaId] = React.useState<string>('');
   const [selectedDeptId, setSelectedDeptId] = React.useState<string>('');
-  const [areas, setAreas] = React.useState([]);
-  const [depts, setDepts] = React.useState<any>([]);
-  const [electionOverview, setElectionOverview] = React.useState<any>([]);
-  const [nationTickets, setNationTickets] = React.useState([]);
-  const [cityTickets, setCityTickets] = React.useState<any>([]);
-  const [areaTickets, setAreaTickets] = React.useState<any>([]);
-  const [deptTickets, setDeptTickets] = React.useState<any>([]);
+  const [areas, setAreas] = React.useState<TLocation[]>([]);
+  const [depts, setDepts] = React.useState<TLocation[]>([]);
+  const [electionOverview, setElectionOverview] = React.useState<TTicket>({} as TTicket);
+  const [nationTickets, setNationTickets] = React.useState<TTicket[]>([]);
+  const [cityTickets, setCityTickets] = React.useState<TTicket[]>([]);
+  const [areaTickets, setAreaTickets] = React.useState<TTicket[]>([]);
+  const [deptTickets, setDeptTickets] = React.useState<TTicket[]>([]);
   const themeItems = areaThemes[0].theme_items;
   const nationCandidatePairs = getCandidatePairs(nationTickets);
-  const cityCandidatePairs = getCandidatePairs(cityTickets?.filter((item: any) => `${item.prv_code}_${item.city_code}_${item.area_code}_${item.dept_code}_${item.li_code}` === selectedCityId));
-  const areaCandidatePairs = getCandidatePairs(areaTickets?.filter((item: any) => `${item.prv_code}_${item.city_code}_${item.area_code}_${item.dept_code}_${item.li_code}` === selectedAreaId));
-  const deptCandidatePairs = getCandidatePairs(deptTickets?.filter((item: any) => `${item.prv_code}_${item.city_code}_${item.area_code}_${item.dept_code}_${item.li_code}` === selectedDeptId));
+  const cityCandidatePairs = getCandidatePairs(cityTickets?.filter((item) => `${item.prv_code}_${item.city_code}_${item.area_code}_${item.dept_code}_${item.li_code}` === selectedCityId));
+  const areaCandidatePairs = getCandidatePairs(areaTickets?.filter((item) => `${item.prv_code}_${item.city_code}_${item.area_code}_${item.dept_code}_${item.li_code}` === selectedAreaId));
+  const deptCandidatePairs = getCandidatePairs(deptTickets?.filter((item) => `${item.prv_code}_${item.city_code}_${item.area_code}_${item.dept_code}_${item.li_code}` === selectedDeptId));
   const cityTicketsMap = getCityTicketsMap(cities, cityTickets);
 
   const resetSelectedIds = () => {

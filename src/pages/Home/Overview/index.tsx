@@ -1,13 +1,14 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from 'react';
 import styled from 'styled-components';
 import Collpase from 'src/components/Collapse';
+import { TTicket, TCandidatePair } from 'src/types';
+
 import VoteCountAndChart from './VoteCountAndChart';
 import Nationwide from './Nationwide';
 
 interface IProps {
-  electionOverview: any;
-  nationCandidatePairs: any[];
+  electionOverview: TTicket;
+  nationCandidatePairs: TCandidatePair[];
 }
 
 const Container = styled.div`

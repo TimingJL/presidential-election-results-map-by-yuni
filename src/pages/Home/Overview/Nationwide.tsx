@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import styled from 'styled-components';
 import { PieChart, Pie, Cell } from 'recharts';
+import { TTicket } from 'src/types';
 
 const Flex = styled.div`
   display: flex;
@@ -45,7 +45,7 @@ const data = [
 const COLORS = ['#262E49', '#D9D9D9'];
 
 interface IProps {
-  electionOverview: any;
+  electionOverview: TTicket;
 }
 
 const Nationwide = (props: IProps) => {

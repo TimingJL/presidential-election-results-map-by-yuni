@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import styled from 'styled-components';
+import { TCandidatePair } from 'src/types';
 
 interface IProps {
-  candidatePairs: any[];
+  candidatePairs: TCandidatePair[];
 }
 
 const Row = styled.div`
@@ -52,10 +52,10 @@ const VoteCount = (props: IProps) => {
           <Row key={item.candidateNo}>
             <Row
               style={{
-                borderRight: `2px solid #${item.partyColor}`,
+                borderRight: `2px solid #${item.partyColor || 'b3b3b3'}`,
               }}
             >
-              <CandidateNoCircle $color={`#${item.partyColor}`}>
+              <CandidateNoCircle $color={`#${item.partyColor || 'b3b3b3'}`}>
                 <span>{item.candidateNo}</span>
               </CandidateNoCircle>
               <div

@@ -1,8 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import { TCityTicketsMap } from 'src/types';
 import City from './City';
 
+
+
 interface IProps extends React.SVGProps<SVGSVGElement> {
-  cityTicketsMap?: any[];
+  cityTicketsMap?: TCityTicketsMap[];
   onClickCity?: (cityId: string) => void;
 }
 

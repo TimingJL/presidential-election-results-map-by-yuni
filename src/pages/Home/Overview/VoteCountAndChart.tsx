@@ -1,10 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import styled from 'styled-components';
 import { PieChart, Pie, Cell } from 'recharts';
 import VoteCount from 'src/components/VoteCount';
+import { TCandidatePair } from 'src/types';
 
 interface IProps {
-  candidatePairs: any[];
+  candidatePairs: TCandidatePair[];
 }
 
 const Flex = styled.div`

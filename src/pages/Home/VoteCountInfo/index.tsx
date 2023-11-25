@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { orderBy } from 'lodash';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import styled from 'styled-components';
@@ -6,6 +5,7 @@ import VoteCount from 'src/components/VoteCount';
 import infoSrc from 'src/assets/images/info.svg';
 import infoSelectSrc from 'src/assets/images/info-select.svg';
 import infoClickAreaSrc from 'src/assets/images/info-click-area.svg';
+import { TCandidatePair } from 'src/types';
 
 const Container = styled.div`
   .vote-count-info__desktop {
@@ -66,9 +66,9 @@ interface IProps {
   selectedCityId?: string;
   selectedAreaId?: string;
   selectedDeptId?: string;
-  cityCandidatePairs: any[];
-  areaCandidatePairs: any[];
-  deptCandidatePairs: any[];
+  cityCandidatePairs: TCandidatePair[];
+  areaCandidatePairs: TCandidatePair[];
+  deptCandidatePairs: TCandidatePair[];
 }
 
 const VoteCountInfo = (props: IProps) => {
