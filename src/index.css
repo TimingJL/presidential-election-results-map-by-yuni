@@ -49,10 +49,11 @@ button:focus-visible {
 
 
 .rc-tooltip-content {
-  border-radius: 4px;
+  border-radius: 8px;
   font-weight: 600;
   background-color: #1a1a1a99;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
 .rc-tooltip-arrow {
   border-top-color: #1a1a1abb !important;

@@ -13,12 +13,7 @@ const G = styled.g`
 interface IProps {
   data?: any;
   content: React.ReactNode;
-  onClick?: ({
-    name, code
-  }: {
-    name: string;
-    code: string;
-  }) => void;
+  onClick?: (cityId: string) => void;
 }
 
 const City = (props: IProps) => {
@@ -28,12 +23,13 @@ const City = (props: IProps) => {
       placement="top"
       trigger={['hover']}
       overlay={data?.name}
+      transitionName={'rc-tooltip-zoom'}
     >
       <G
         id={data?.code}
         data-city={data?.name}
         fill={`#${data?.partyColor}`}
-        onClick={() => onClick({ name: data.name, code: data.code })}
+        onClick={() => onClick(data.code)}
       >
         {content}
       </G>

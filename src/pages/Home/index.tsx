@@ -180,7 +180,10 @@ const Home = () => {
             nationCandidatePairs={nationCandidatePairs}
           />
           <MapContainer>
-            <TaiwanMap cityTicketsMap={cityTicketsMap} />
+            <TaiwanMap
+              cityTicketsMap={cityTicketsMap}
+              onClickCity={(cityId: string) => setSelectedCityId(cityId)}
+            />
           </MapContainer>
           <VoteCountInfoContainer>
             <VoteCountInfo
