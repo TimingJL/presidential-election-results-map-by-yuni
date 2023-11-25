@@ -46,10 +46,10 @@ yarn dev
 ├── src               # 專案的主要原始碼資料夾，包含了應用程式的原始程式碼。
 │   ├── assets/       # 包含應用程式的靜態資源，如圖像、字體等。
 │   ├── components/   # 包含應用程式中的可重複使用元件。
-│   ├── config/       # 包含應用程式的設定檔或設定。
+│   ├── hooks/        # 包含共用的 React Hooks。
 │   ├── pages/        # 包含應用程式的頁面元件，用於建立不同的頁面。
 │   ├── theme/        # 包含應用程式的樣式或主題相關的檔案。
-│   ├── utils/        # 包含各種輔助工具或功能的實用工具函數。
+│   ├── types/        # 包含各種 typescript 的型別。
 │   ├── App.tsx       # 應用程式的主應用程式元件。
 │   ├── main.tsx      # 應用程式的主入口檔案。
 │   └── vite-env.d.ts # Vite的類型定義檔。
@@ -67,6 +67,7 @@ yarn dev
 
 - React.js：前端開發框架，用於建立使用者介面和應用程式的元件。
 - styled-components：用於建立和管理應用程式的樣式的 CSS-in-JS 函式庫。
+- axios: Axios 是一個簡單的基於 Promise 的 HTTP 客戶端，適用於瀏覽器和 Node.js。Axios 提供了一個小巧的 package，具有非常可擴展的 interface。
 
 **建置工具**
 
@@ -83,6 +84,11 @@ yarn dev
 **部署和託管**
 
 - gh-pages：用於將應用程式部署到 GitHub Pages，以便在線上示範和分享專案。
+
+**資料**
+
+- 使用選舉及公投資料庫 API
+  - https://db.cec.gov.tw/ElecTable/Election?type=President
 
 ## 相關連結
 
