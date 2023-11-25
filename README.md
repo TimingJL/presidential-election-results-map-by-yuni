@@ -87,4 +87,4 @@ yarn dev
 ## 相關連結
 
 - [關卡資訊 | 第二關 - 總統即時開票全台地圖](https://chalk-freedom-ec6.notion.site/814fe6ddc85f47b2964aceec422ad4cb)
-- [設計稿（Designed by yuni](https://www.figma.com/file/Caoi6yMxwbeKMneS5tsCt6/開票地圖?type=design&node-id=66%3A3043&mode=design&t=5N4mw68gAfagODaM-1)
+- [設計稿(Designed by yuni)](https://www.figma.com/file/Caoi6yMxwbeKMneS5tsCt6/開票地圖?type=design&node-id=66%3A3043&mode=design&t=5N4mw68gAfagODaM-1)
