@@ -41,7 +41,7 @@ const Overview = (props: IProps) => {
   const { nationCandidatePairs, electionOverview } = props;
   const [open, setOpen] = React.useState(false);
   return (
-    <Container>
+    <Container data-aos="fade-up" data-aos-delay="300">
       <Collpase
         open={open}
         title="投票概況"

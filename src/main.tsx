@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client'
 
 import 'swiper/css';
 import 'rc-tooltip/assets/bootstrap_white.css';
+import "aos/dist/aos.css";
 
 import App from './App.tsx'
 import './index.css'

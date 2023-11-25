@@ -142,7 +142,7 @@ const Home = () => {
   return (
     <>
       <Navigation />
-      <ContentWrapper>
+      <ContentWrapper data-aos="fade-up">
         <Tabs
           selectedOptionId={selectedThemeId}
           options={tabOptions}
@@ -190,7 +190,7 @@ const Home = () => {
             electionOverview={electionOverview}
             nationCandidatePairs={nationCandidatePairs}
           />
-          <MapContainer>
+          <MapContainer data-aos="fade-up" data-aos-delay="500">
             <TaiwanMap
               cityTicketsMap={cityTicketsMap}
               onClickCity={(cityId: string) => setSelectedCityId(cityId)}

@@ -97,7 +97,7 @@ const VoteCountInfo = (props: IProps) => {
     </OuterBox>
   ];
   const hintComponents = [
-    <OuterBox style={{ background: '#DEE0E4' }}>
+    <OuterBox style={{ background: '#DEE0E4' }} data-aos="fade-up" data-aos-delay="700">
       <InnerBox style={{ filter: 'none' }}>
         <Title>
           <img src={infoSrc} />
@@ -109,7 +109,7 @@ const VoteCountInfo = (props: IProps) => {
         </Diagram>
       </InnerBox>
     </OuterBox>,
-    <OuterBox style={{ background: '#DEE0E4' }}>
+    <OuterBox style={{ background: '#DEE0E4' }} data-aos="fade-up" data-aos-delay="900">
       <InnerBox style={{ filter: 'none' }}>
         <Title>
           <img src={infoSrc} />
@@ -150,7 +150,9 @@ const VoteCountInfo = (props: IProps) => {
         </Swiper>
       </div>
       <div className="vote-count-info__desktop">
-        {boxComponents.map((boxComponent) => boxComponent)}
+        {boxComponents.map((boxComponent, index) => (
+          <div key={index} data-aos="fade-up">{boxComponent}</div>
+        ))}
       </div>
     </Container>
   );
