@@ -62,6 +62,7 @@ const Select = (props: IProps) => {
   const [open, setOpen] = React.useState(false);
   const { options = [], selectedOptionId, className, onChange = () => null } = props;
   const selectedOption = options.find((option) => option.id === selectedOptionId);
+  const hasOptions = options.length > 0;
 
   React.useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
@@ -86,24 +87,26 @@ const Select = (props: IProps) => {
         <div>{selectedOption?.name || '請選擇'}</div>
         <img src={ChevronDownSrc} />
       </SelectButton>
-      <SelectDropdown
-        $open={open}
-      >
-        {options.map((option) => {
-          return (
-            <Option
-              key={option.id}
-              $selected={option.id === selectedOptionId}
-              onClick={() => {
-                onChange(option.id);
-                setOpen(false);
-              }}
-            >
-              {option.name}
-            </Option>
-          );
-        })}
-      </SelectDropdown>
+      {hasOptions && (
+        <SelectDropdown
+          $open={open}
+        >
+          {options.map((option) => {
+            return (
+              <Option
+                key={option.id}
+                $selected={option.id === selectedOptionId}
+                onClick={() => {
+                  onChange(option.id);
+                  setOpen(false);
+                }}
+              >
+                {option.name}
+              </Option>
+            );
+          })}
+        </SelectDropdown>
+      )}
     </SelectWrapper>
   );
 };

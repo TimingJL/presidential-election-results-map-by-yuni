@@ -6,8 +6,6 @@ import partyColors from 'src/assets/data/party_colors.json';
 import areaThemes from 'src/assets/data/area_themes.json';
 import cities from 'src/assets/data/cities.json';
 
-const defaultCity = cities['00_000_00_000_0000'][0];
-
 const getCandidatePairs = (nationTickets: any = []) => {
   const candidateNoList = uniq(nationTickets.map((item: any) => item.cand_no)) as number[];
   return candidateNoList.map((candidateNo: number) => {
@@ -30,7 +28,7 @@ const getCandidatePairs = (nationTickets: any = []) => {
 
 export const useElectionData = () => {
   const [selectedThemeId, setSelectedThemeId] = React.useState(areaThemes[0].theme_items[0].theme_id);
-  const [selectedCityId, setSelectedCityId] = React.useState<string>(`${defaultCity.prv_code}_${defaultCity.city_code}_${defaultCity.area_code}_${defaultCity.dept_code}_${defaultCity.li_code}`);
+  const [selectedCityId, setSelectedCityId] = React.useState<string>('');
   const [selectedAreaId, setSelectedAreaId] = React.useState<string>('');
   const [selectedDeptId, setSelectedDeptId] = React.useState<string>('');
   const [areas, setAreas] = React.useState([]);

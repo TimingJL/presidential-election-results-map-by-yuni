@@ -11,8 +11,7 @@ import VoteCountInfo from 'src/pages/Home/VoteCountInfo';
 
 const ContentWrapper = styled.div`
   padding: 32px 24px;
-  background: #F5F5F5;
-  min-height: 100vh;
+  box-sizing: border-box;
   @media ${({ theme }) => theme.desktop} {
     min-height: fit-content;
   }
@@ -161,7 +160,14 @@ const Home = () => {
               />
             </Row>
           </SelectsWrapper>
-          <button className="select__clear-button">
+          <button
+            className="select__clear-button"
+            onClick={() => {
+              setSelectedCityId('');
+              setSelectedAreaId('');
+              setSelectedDeptId('');
+            }}
+          >
             <span className="select__clear-button-text">清除</span>
             <img src={rotateIconSrc} />
           </button>
@@ -173,6 +179,9 @@ const Home = () => {
           </MapContainer>
           <VoteCountInfoContainer>
             <VoteCountInfo
+              selectedCityId={selectedCityId}
+              selectedAreaId={selectedAreaId}
+              selectedDeptId={selectedDeptId}
               cityCandidatePairs={cityCandidatePairs}
               areaCandidatePairs={areaCandidatePairs}
               deptCandidatePairs={deptCandidatePairs}
