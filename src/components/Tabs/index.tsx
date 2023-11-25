@@ -40,6 +40,9 @@ const Option = styled.div<{
     }
   }
   ${(props) => props.$isSelected && activeOptionStyle}
+  @media ${({ theme }) => theme.desktop} {
+    font-size: 20px;
+  }
 `;
 
 const Tabs = (props: IProps) => {
@@ -65,19 +68,19 @@ const Tabs = (props: IProps) => {
           slidesPerView: 4,
         },
         // when window width is >= 1024px
-        1024: {
+        1200: {
           slidesPerView: 5,
         },
         // when window width is >= 1200px
-        1200: {
+        1400: {
           slidesPerView: 6,
         },
         // when window width is >= 1400px
-        1400: {
+        1600: {
           slidesPerView: 7,
         },
         // when window width is >= 1600px
-        1600: {
+        1800: {
           slidesPerView: 8,
         }
       }}
