@@ -39,6 +39,12 @@ const SelectButton = styled.div<{
   border-radius: 8px;
   border: 1px solid ${props => props.$open ? '#262E49' : '#E6E6E6'};
   cursor: pointer;
+  .select-button__name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100px;
+  }
   &:hover {
     border: 1px solid ${props => props.$open ? '#262E49' : '#BFBFBF'};
   }
@@ -110,7 +116,7 @@ const Select = (props: IProps) => {
           setOpen(true);
         }}
       >
-        <div>{selectedOption?.name || '請選擇'}</div>
+        <div className="select-button__name">{selectedOption?.name || '請選擇'}</div>
         <img src={ChevronDownSrc} />
       </SelectButton>
       {hasOptions && (
