@@ -106,6 +106,12 @@ Error generating stack: `+o.message+`
   border-radius: 8px;
   border: 1px solid ${e=>e.$open?"#262E49":"#E6E6E6"};
   cursor: pointer;
+  .select-button__name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100px;
+  }
   &:hover {
     border: 1px solid ${e=>e.$open?"#262E49":"#BFBFBF"};
   }
@@ -133,7 +139,7 @@ Error generating stack: `+o.message+`
   &:hover {
     background: #DEE0E4;
   }
-`,V0=e=>{const t=L.useRef(null),[n,r]=L.useState(!1),{options:i=[],selectedOptionId:o,className:a,disabled:l=!1,onChange:u=()=>null}=e,f=i.find(d=>d.id===o),p=i.length>0;return L.useEffect(()=>{const d=v=>{var m;t!=null&&t.current&&!((m=t==null?void 0:t.current)!=null&&m.contains(v.target))&&r(!1)};return document.addEventListener("mousedown",d),()=>{document.removeEventListener("mousedown",d)}},[]),G.jsxs(YU,{ref:t,className:a,children:[G.jsxs(ZU,{$open:n,$disabled:l,onClick:()=>{l||r(!0)},children:[G.jsx("div",{children:(f==null?void 0:f.name)||"請選擇"}),G.jsx("img",{src:r4})]}),p&&G.jsx(QU,{$open:n,children:i.map(d=>G.jsx(JU,{$selected:d.id===o,onClick:()=>{u(d.id),r(!1)},children:d.name},d.id))})]})};var i4={exports:{}};/*!
+`,V0=e=>{const t=L.useRef(null),[n,r]=L.useState(!1),{options:i=[],selectedOptionId:o,className:a,disabled:l=!1,onChange:u=()=>null}=e,f=i.find(d=>d.id===o),p=i.length>0;return L.useEffect(()=>{const d=v=>{var m;t!=null&&t.current&&!((m=t==null?void 0:t.current)!=null&&m.contains(v.target))&&r(!1)};return document.addEventListener("mousedown",d),()=>{document.removeEventListener("mousedown",d)}},[]),G.jsxs(YU,{ref:t,className:a,children:[G.jsxs(ZU,{$open:n,$disabled:l,onClick:()=>{l||r(!0)},children:[G.jsx("div",{className:"select-button__name",children:(f==null?void 0:f.name)||"請選擇"}),G.jsx("img",{src:r4})]}),p&&G.jsx(QU,{$open:n,children:i.map(d=>G.jsx(JU,{$selected:d.id===o,onClick:()=>{u(d.id),r(!1)},children:d.name},d.id))})]})};var i4={exports:{}};/*!
 	Copyright (c) 2018 Jed Watson.
 	Licensed under the MIT License (MIT), see
 	http://jedwatson.github.io/classnames
